@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordy's Pokedex | Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" type="image/png">
+    <style>
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp10425519.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            margin: 0;
+        }
+
+        .main{
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* 👈 supaya ke atas */
+            padding-top: 80px; /* 👈 atur jarak dari atas */
+            text-align: center;
+        }
+
+        .img img {
+            max-width: 300%;
+            height: auto;
+        }
+
+        .search-box {
+            margin-top: 30px;
+            margin-left: 30px; /* 👈 geser sedikit ke kanan */
+        }
+
+        .search-box input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffcb05;
+            width: 250px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #ffcb05;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .social-links {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;               /* jarak antar baris */
+            flex-wrap: wrap;
+            width: 100%;
+            z-index: 100;
+            padding: 16px 0;
+            padding-left: 50px;
+            bottom: 0;
+            left: 0;
+            margin-bottom: 0px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 2px;                /* jarak antara ikon dan teks */
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .social-item img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .social-item:hover {
+            color: #007bff; /* warna saat hover */
+        }
+    </style>
+</head>
+<body>
+    <section class="main">
+        <div class="img">
+            <a href="{% url 'homepage' %}">
+                <img src="https://pluspng.com/img-png/pokemon-logo-png-pokemon-logo-png-2000.png"  style="height: 55%; width: 30%;" >
+            </a>
+        </div>
+        <div class="search-box mt-4">
+            <form action="{% url 'resultpage' %}" method="GET">
+            <input id='name' name="poke" type="text" placeholder= "Type Pokemon Name..." required>
+            <button type="submit">🔍</button>  
+        </form>
+        </div>
+    </section>
+    <footer class="social-links">
+        <a href="https://github.com/jordyyusim" target="_blank" class="social-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
+            <span>@jordyyusim</span>
+        </a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+            <span>@jordyyusim</span>
+        </a>
+        <a href="https://x.com/yourusername" target="_blank" class="social-item">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg" alt="X (Twitter)" />
+            <span>@jordyyusim</span>
+        </a>
+    </footer>
+</body>
+</html>

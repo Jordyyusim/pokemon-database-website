@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  Jordy's Pokedex | {{ data.name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" sizes="192x192" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" type="image/png">
+    <style>
+        body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            height: 80px;
+            background: linear-gradient(to right, #ffcb05, #ef4444);
+            padding-left: 40px;
+            }   
+
+        .nav img {
+            height: 50px;
+            width: 150px;
+            
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;  /* penting untuk bantu input rata tengah */
+            margin: 0;
+            padding-top: 10px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #0a2df6bd;
+            width: 250px;
+        }
+
+        .search-form {
+            margin: 0;
+        }
+
+        .custom-input {
+            height: 40px; /* atau 45px, sesuai ukuran logomu */
+            font-size: 12px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            color: white;
+            box-sizing: border-box;
+            height: calc(100vh - 80px);
+        }
+
+        .left-side {
+            width: 50%;
+            height: 95%;
+            text-align: center;
+            padding: 40px 60px;
+        }
+
+        .left-side img {
+            width: 300px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        .left-side h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1F2937;
+            margin-top: 10px;
+        }
+
+        .pokemon-id {
+            font-family: monospace;
+            font-size: 1.5rem;
+            color: #6B7280;
+            margin-top: -5px;
+        }
+
+        .arrow-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #e5e7eb; /* abu-abu muda */
+            color: #374151;             /* abu-abu gelap */
+            border-radius: 12%;
+            transition: background-color 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: #d1d5db;
+        }
+
+        .type-badge {
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .info {
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .label {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #6B7280;
+            margin-bottom: 0px;
+        }
+
+        .strong-label {
+            color: black;
+            font-size: 1.8rem;
+        }
+
+        .right-side {
+            width: 50%;
+            height: 95%;
+            background-color: #f3f4f6;
+        }
+
+        .right-side h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0px;
+            margin-top: 50px;
+            padding-left: 100px;
+            color: #111827;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 100px;
+            margin: 6px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #6B7280;
+            width: 400px;
+        }
+
+        .stages {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stage-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .right-side .stage-label {
+            font-size: 1 rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-top: 90px;
+            color: #111827;
+        }
+
+        .prev {
+            width :150px;
+            height: auto;
+        }
+
+        .evo-img {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat span:first-child {
+            flex: 1;
+            text-align: left;
+        }
+
+        .stat span:last-child {
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .type-badge.normal {
+            background-color: whitesmoke;
+            color: black;
+        }
+
+        .fire {
+        background-color: #f87171; 
+        }
+
+        .water {
+            background-color: #60a5fa; 
+        }
+
+        .electric {
+            background-color: #facc15;
+            color: black;
+        }
+
+        .grass {
+            background-color: #4ade80;
+        }
+
+        .ice {
+            background-color: #a5f3fc;
+            color: black;
+        }
+
+        .psychic {
+            background-color: #a78bfa;
+        }
+
+        .rock {
+            background-color: #c07f06;
+        }
+
+        .ground {
+            background-color: #fbbf24;
+            color: black;
+        }
+
+        .fighting {
+            background-color: #f97316;
+        }
+
+        .poison {
+            background-color: #c084fc;
+        }
+
+        .flying {
+            background-color: #d1d5db;
+            color: black;
+        }
+
+        .bug {
+            background-color: #a3e635;
+        }
+
+        .dragon {
+            background-color: #818cf8;
+        }
+
+        .dark {
+            background-color: #000000;
+            color: white;
+        }
+
+        .fairy {
+            background-color: #f9a8d4;
+        }
+
+        .ghost {
+            background-color: #a78bfa;
+        }
+
+        .steel {
+            background-color: #292a2cbd;
+            color: white;
+        }
+
+        .social-links {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;               /* jarak antar baris */
+            flex-wrap: wrap;
+            width: 100%;
+            height: 5vh;
+            background-color: #ffcb05;
+            z-index: 100;
+            padding: 16px 0;
+            padding-left: 50px;
+            bottom: 0;
+            left: 0;
+            margin-bottom: 0px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 2px;                /* jarak antara ikon dan teks */
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: color 0.2s ease;
+            top:-2px
+        }
+
+        .social-item img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .social-item:hover {
+            color: #007bff; /* warna saat hover */
+        }
+        </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="{% url 'homepage' %}" >
+            <img src="https://pluspng.com/img-png/pokemon-logo-png-pokemon-logo-png-2000.png" >
+        </a>
+        <div class="search-box">
+            <form class= search-form action="{% url 'resultpage' %}" method="get">
+                <input type="text" name="poke" class="custom-input" placeholder="Type Pokemon Name...">
+            </form>
+        </div>
+    </div>
+
+    {% if eror %}
+        <div style="text-align:center; margin-top: 100px;">
+            <h2 style="color: red;">⚠️ {{eror}}</h2>
+            <a href="{% url 'homepage' %}" 
+                style="display: inline-block; margin-top: 20px; padding: 10px 20px;
+                        background-color: #ffcb05; color: black; text-decoration: none;
+                        font-weight: bold; border-radius: 8px;">
+                ← Back to Home
+            </a>
+        </div>
+
+    {% else %}
+        <div class="content">
+            <div class="left-side">
+                <img src="{{data.img}}">
+                <h1>{{data.name}}</h1>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding:4px">
+                    <a href="{% url 'resultpage' %}?poke={{ id_before_after.before }}" 
+                    class="arrow-btn">&#8592;</a>
+
+                    <p class="pokemon-id" style="margin: 0;">#{{ data.id }}</p>
+
+                    <a href="{% url 'resultpage' %}?poke={{ id_before_after.after }}" 
+                    class="arrow-btn">&#8594;</a>
+                </div>
+                {% for i in data.poke_type %}
+                    <span class="type-badge {{i|lower}}">{{ i|capfirst }}</span>
+                {% endfor %}
+                <div class="info">
+                    <div>
+                        <p class="label">Weight</p>
+                        <p><strong class="strong-label">{{data.weight}} kg</strong></p>
+                    </div>
+                    <div>
+                        <p class="label">Height</p>
+                        <p><strong class="strong-label">{{data.height}} m</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-side">
+                <h2>Base Status</h2>
+                    <div class="stat">
+                        <span>HP</span><span>{{ data.stats.base_hp }}</span>
+                    </div>
+                    <div class="stat">
+                        <span>Attack</span><span>{{ data.stats.base_attack }}</span>
+                    </div>
+                    <div class="stat">
+                        <span>Defense</span><span>{{ data.stats.base_defense }}</span>
+                    </div>
+                    <div class="stat">
+                        <span>Sp. Attack</span><span>{{ data.stats.base_special_attack }}</span>
+                    </div>
+                    <div class="stat">
+                        <span>Sp. Defense</span><span>{{ data.stats.base_special_defense }}</span>
+                    </div>
+                    <div class="stat">
+                        <span>Speed</span><span>{{ data.stats.base_speed }}</span>
+                    </div>
+
+                    {% if prev_img and evo_img %}
+                    <div class="stages">
+                        <div class="stage-col">
+                            <h5 class="stage-label">Previous Stage</h5>
+                            {% for key, val in prev_img.items %}
+                                <a href="{% url 'resultpage' %}?poke={{key|urlencode}}">
+                                    <img class="prev" src="{{ val }}">
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <div class="stage-col">
+                            <h5 class="stage-label">Next Stage</h5>
+                            <div class="evo-img">
+                            {% for key, val in evo_img.items %}
+                                <a href="{% url 'resultpage' %}?poke={{key|urlencode}}">
+                                    <img class="prev" src="{{ val }}">
+                                </a>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% elif prev_img %}
+                    <div class="stages">
+                        <div class="stage-col">
+                            <h5 class="stage-label">Previous Stage</h5>
+                            {% for key, val in prev_img.items %}
+                                <a href="{% url 'resultpage' %}?poke={{key|urlencode}}">
+                                    <img class="prev" src="{{ val }}">
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% elif evo_img %}
+                    <div class="stages">
+                        <div class="stage-col">
+                            <h5 class="stage-label">Next Stage</h5>
+                            <div class="evo-img">
+                                {% for key, val in evo_img.items %}
+                                    <a href="{% url 'resultpage' %}?poke={{key|urlencode}}">
+                                        <img class="prev" src="{{ val }}">
+                                    </a>
+                                {% endfor %}
+                            
+                        </div>
+                    </div>
+                    {% endif %}
+
+            </div>
+        {% endif %}
+
+    </div>
+    <footer class="social-links">
+        <a href="https://github.com/jordyyusim" target="_blank" class="social-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
+            <span>@jordyyusim</span>
+        </a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+            <span>@jordyyusim</span>
+        </a>
+        <a href="https://x.com/yourusername" target="_blank" class="social-item">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg" alt="X (Twitter)" />
+            <span>@jordyyusim</span>
+        </a>
+    </footer>
+</body>
+</html>
